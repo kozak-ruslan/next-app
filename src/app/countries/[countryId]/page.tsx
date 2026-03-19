@@ -3,6 +3,7 @@ import React from 'react';
 import { gql } from '@apollo/client';
 import { useQuery } from '@apollo/client/react';
 import { getClient } from '@/src/lib/apollo/rsc';
+import Link from 'next/link';
 
 interface CountryProps {
     params: Promise<{ countryId: string }>
@@ -13,6 +14,7 @@ export default async function Country(props: CountryProps) {
     const { countryId } = await props.params;
     return (
         <div>
+            <Link href="/countries">Back to Countries List</Link>
             <h1>Country Page</h1>
             <p>Country ID: {countryId}</p>
         </div>
