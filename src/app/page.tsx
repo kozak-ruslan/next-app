@@ -1,7 +1,7 @@
 // import course from "./course.json";
 
 import dynamic from 'next/dynamic';
-import { query } from '../lib/apollo/rsc';
+import { query } from '@/lib/apollo/rsc';
 import { gql } from '@apollo/client';
 // const DynamicTestClientComponent = dynamic(
 //     () => import('./')

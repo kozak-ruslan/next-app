@@ -9,7 +9,7 @@ export const { getClient, query, PreloadQuery } = registerApolloClient(() => {
     return new ApolloClient({
         cache: new InMemoryCache(),
         link: new HttpLink({
-            uri: 'https://countries.trevorblades.com/graphql',
+            uri: 'https://graphqlzero.almansi.me/api', //'https://countries.trevorblades.com/graphql',
             fetchOptions: {},
         }),
     });
