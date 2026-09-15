@@ -739,6 +739,47 @@ getClient().query({
 
 ---
 
+## 4.1 `revalidatePath` та `fetchPolicy`
+
+`revalidatePath()` — це **on-demand revalidation** у Next.js. Вона позначає кеш конкретного маршруту як неактуальний, щоб Next.js повторно відрендерив його зі свіжими даними.
+
+```ts
+import { revalidatePath } from "next/cache";
+
+await createUser();
+revalidatePath("/users");
+```
+
+Це не те саме, що класичний ISR:
+
+- `export const revalidate = 60` — автоматична ревалідація через певний час;
+- `revalidatePath("/users")` — ревалідація на вимогу після конкретної події;
+- використання `revalidatePath()` саме по собі не робить динамічну сторінку ISR.
+
+### Різниця з Apollo `fetchPolicy`
+
+- `revalidatePath()` керує кешем маршруту та повторним рендерингом у **Next.js**;
+- `fetchPolicy` визначає, звідки **Apollo Client** бере GraphQL-дані;
+- `revalidatePath()` не належить до жодного `fetchPolicy`.
+
+Щоб після ревалідації гарантовано виконати новий GraphQL-запит:
+
+```ts
+await getClient().query({
+  query: GET_USERS,
+  fetchPolicy: "network-only",
+});
+```
+
+Отже:
+
+```text
+revalidatePath → повторний рендер Server Component
+network-only   → новий GraphQL-запит до сервера
+```
+
+---
+
 ## 5. Компоненти в App Router
 
 ### Server Components
